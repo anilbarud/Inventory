@@ -1,0 +1,53 @@
+CREATE TABLE supplier (
+    kdsupplier char(10) PRIMARY KEY,
+    nmsupplier varchar(50),
+    alamat text,
+    telp varchar(25),
+    fax varchar(25)
+);
+
+CREATE TABLE customer (
+    kdcustomer char(10) PRIMARY KEY,
+    nmcustomer varchar(50),
+    alamat text,
+    telp varchar(25)
+);
+
+CREATE TABLE barang (
+    kdbarang char(10) PRIMARY KEY,
+    nmbarang varchar(50),
+    harga numeric(9),
+    stok numeric(9)
+);
+
+CREATE TABLE pembelian (
+    nobeli char(10) PRIMARY KEY,
+    kdsupplier char(10),
+    tgl datetime,
+    FOREIGN KEY (kdsupplier) REFERENCES supplier (kdsupplier)
+);
+
+CREATE TABLE pembelian_det (
+    nobeli char(10) PRIMARY KEY,
+    kdbarang char(10) PRIMARY KEY,
+    jumlah numeric(9),
+    total numeric(9),
+    FOREIGN KEY (nobeli) REFERENCES pembelian (nobeli),
+    FOREIGN KEY (kdbarang) REFERENCES barang (kdbarang)
+);
+
+CREATE TABLE penjualan (
+    nojual char(10) PRIMARY KEY,
+    kdcustomer char(10),
+    tgl datetime,
+    FOREIGN KEY (kdcustomer) REFERENCES customer (kdcustomer)
+);
+
+CREATE TABLE penjualan_det (
+    nojual char(10) PRIMARY KEY,
+    kdbarang char(10) PRIMARY KEY,
+    jumlah numeric(9),
+    total numeric(9),
+    FOREIGN KEY (nojual) REFERENCES penjualan (nojual),
+    FOREIGN KEY (kdbarang) REFERENCES barang (kdbarang)
+);
